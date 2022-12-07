@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutation";
-import { QUERY_ALLUSERS } from "../../utils/queries";
 
 import "./Login.css";
 
 import Auth from "../../utils/auth";
 
 const LoginForm = () => {
-	const { data, err } = useQuery(QUERY_ALLUSERS);
-
 	const [userFormData, setUserFormData] = useState({ email: "", password: "" });
 	const [validated] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
-	const [loginUser, { error }] = useMutation(LOGIN_USER);
-
-	const allUsers = data?.users || [];
-	console.log(err);
-	console.log(allUsers);
+	const [loginUser] = useMutation(LOGIN_USER);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -76,6 +69,10 @@ const LoginForm = () => {
 						Something went wrong with your login credentials!
 					</Alert>
 					<Form.Group controlId="formEmail">
+						<Form.Label className="hint">
+							For the Demo Experience use email: demo@demo.demo, and password:
+							letmein
+						</Form.Label>
 						<Form.Label>Please enter credentials to log in:</Form.Label>
 						<Form.Control
 							className="mb-2"
